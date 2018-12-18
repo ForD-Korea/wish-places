@@ -20,7 +20,20 @@ class Map extends Component {
   componentDidUpdate() {
     const { map } = this;
     const { latitude, longitude } = this.props.currentLocation;
+    const { markerList } = this.props;
     const newCenterPosition = new window.naver.maps.LatLng(latitude, longitude);
+
+    markerList.forEach(
+      marker => {
+        const markerCoords = new window.naver.maps.LatLng(marker.y, marker.x);
+
+        new window.naver.maps.Marker({ 
+          position: markerCoords,
+          title: marker.name,
+          map
+        });
+      }
+    )
 
     map.setCenter(newCenterPosition);
   }

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 
 import Map from './components/Map';
+import SearchBar from './components/SearchBar';
 
 class App extends Component {
   constructor(props) {
@@ -11,8 +12,11 @@ class App extends Component {
       currentLocation: {
         longitude: 127.105399,
         latitude: 37.3595704
-      }
+      },
+      markerList: []
     };
+    this.setMapCenter = this.setMapCenter.bind(this);
+    this.setMarkerList = this.setMarkerList.bind(this);
   }
 
   componentWillMount() {
@@ -28,12 +32,29 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.state.currentLocation);
     return (
       <div className="App">
-        <Map currentLocation={this.state.currentLocation}/>
+        <Map 
+          currentLocation={this.state.currentLocation}
+          markerList={this.state.markerList}/>
+        <SearchBar 
+          coords={this.state.currentLocation}
+          setMapCenter={this.setMapCenter}
+          setMarkerList={this.setMarkerList}/>
       </div>
     );
+  }
+
+  setMapCenter(coords) {
+    this.setState({
+      currentLocation: coords
+    });
+  }
+
+  setMarkerList(markerList) {
+    this.setState({
+      markerList
+    });
   }
 }
 

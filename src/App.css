@@ -10,3 +10,61 @@ body{
   width: 80%;
   height: 100%;
 }
+
+.search-bar{
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  width: 300px;
+}
+
+.search-bar input{
+  box-sizing: border-box;
+  width: 80%;
+  padding: 3px 6px;
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.search-bar button{
+  box-sizing: border-box;
+  width: 20%;
+  padding: 4px 6px;
+  font-size: 16px;
+  line-height: 20px;
+  background: #ffffff;
+  border: 1px solid #cccccc;
+}
+
+.search-bar ul{
+  padding: 8px;
+  margin: 0;
+  background: #ffffff;
+  list-style: none;
+}
+
+.search-bar ul li{
+  padding: 4px 0;
+  cursor: pointer;
+}
+
+.search-bar ul li .name{
+  color: #333333;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.search-bar ul li .address{
+  display: block;
+  margin-top: 4px;
+  font-size: 10px;
+  color: #999999;
+}
+
+.search-bar ul li p{
+  margin: 0;
+}
+
+.search-bar ul li + li{
+  border-top: 1px solid #d5d5d5;
+}
