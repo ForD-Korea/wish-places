@@ -8,7 +8,7 @@ class Map extends Component {
   }
 
   componentDidMount() {
-    const { latitude, longitude } = this.props.currentLocation;
+    const { latitude, longitude } = this.props.mapCenterCoords;
     const map = new window.naver.maps.Map(this.mapElement.current, {
       center: new window.naver.maps.LatLng(latitude, longitude),
       zoom: 11
@@ -17,11 +17,28 @@ class Map extends Component {
     this.map = map;
   }
 
+  
+  markCurrentLocation (coords, map) {
+    const { latitude, longitude } = coords;
+    const markerCoords = new window.naver.maps.LatLng(latitude, longitude);
+
+    new window.naver.maps.Marker({ 
+      position: markerCoords,
+      title: '현위치',
+      map,
+      icon: {
+        content: `<div class="current-marker"></div>`
+      }
+    });
+  }
+
   componentDidUpdate() {
     const { map } = this;
-    const { latitude, longitude } = this.props.currentLocation;
+    const { latitude, longitude } = this.props.mapCenterCoords;
     const { markerList } = this.props;
     const newCenterPosition = new window.naver.maps.LatLng(latitude, longitude);
+
+    this.markCurrentLocation(this.props.currentLocation, map);
 
     markerList.forEach(
       marker => {
@@ -33,7 +50,7 @@ class Map extends Component {
           map
         });
       }
-    )
+    );
 
     map.setCenter(newCenterPosition);
   }

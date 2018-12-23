@@ -2,10 +2,13 @@ import React, { Component } from 'react';
 import { fetchPlaceInfo } from '../api';
 
 const SearchList = props => {
-  const { setMapCenter, searchPlaces } = props;
+  const { setMapCenter, searchPlaces, openPopup } = props;
   const searchList = searchPlaces.map(
   (item, index) => (
-    <li key={`search-place-${index}`} onMouseOver={() => setMapCenter({ latitude: item.y, longitude: item.x })}>
+    <li 
+      key={`search-place-${index}`} 
+      onMouseOver={() => setMapCenter({ latitude: item.y, longitude: item.x })}
+      onClick={() => openPopup(item)}>
       <span className="name">{item.name}</span>
       <span className="address">{item.road_address}</span>
       <p></p>
@@ -37,7 +40,7 @@ class SearchBar extends Component {
 
   render() {
     const { searchPlaces } = this.state;
-    const maybeSearchList = !!searchPlaces.length ? <SearchList setMapCenter={this.props.setMapCenter} searchPlaces={searchPlaces} /> : null;
+    const maybeSearchList = !!searchPlaces.length ? <SearchList searchPlaces={searchPlaces} {...this.props}/> : null;
     const submitButtonText = this.state.isLoad ? '로딩중..' : '검색';
 
     return (
