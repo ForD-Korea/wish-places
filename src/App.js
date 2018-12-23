@@ -4,6 +4,7 @@ import './App.css';
 import Map from './components/Map';
 import SearchBar from './components/SearchBar';
 import Popup from './components/Popup';
+import WishList from './components/WishList';
 
 class App extends Component {
   constructor(props) {
@@ -20,7 +21,8 @@ class App extends Component {
       },
       markerList: [],
       popupData: {},
-      isPopupOpen: false
+      isPopupOpen: false,
+      places: []
     };
     this.setMapCenter = this.setMapCenter.bind(this);
     this.setMarkerList = this.setMarkerList.bind(this);
@@ -46,18 +48,19 @@ class App extends Component {
   render() {
     const maybePopup = this.state.isPopupOpen ?
      <Popup {...this.state.popupData} closePopup={this.closePopup}/> : null;
-
     return (
       <div className="App">
         <Map 
           currentLocation={this.state.currentLocation}
           mapCenterCoords={this.state.mapCenterCoords}
-          markerList={this.state.markerList}/>
+          markerList={this.state.markerList}
+          places={this.state.places}/>
         <SearchBar 
           coords={this.state.currentLocation}
           setMapCenter={this.setMapCenter}
           setMarkerList={this.setMarkerList}
           openPopup={this.openPopup}/>
+        <WishList places={this.state.places} setMapCenter={this.setMapCenter}/>
         {maybePopup}
       </div>
     );
@@ -90,11 +93,21 @@ class App extends Component {
     });
 
     if (confirm) {
+      delete data.confirm;
+      this.addPlace(data);
 
       return;
     }
 
-    
+
+  }
+
+  addPlace(place) {
+    const { places } = this.state;
+
+    this.setState({
+      places: [...places, place]
+    });
   }
 }
 

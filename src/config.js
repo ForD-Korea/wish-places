@@ -1,1 +1,1 @@
-export const SEARCH_SERVER = 'http://panleeee.me:3000/search';
+export const SEARCH_SERVER = 'http://panleeee.me/search';

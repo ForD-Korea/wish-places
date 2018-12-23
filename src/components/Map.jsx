@@ -35,11 +35,23 @@ class Map extends Component {
   componentDidUpdate() {
     const { map } = this;
     const { latitude, longitude } = this.props.mapCenterCoords;
-    const { markerList } = this.props;
+    const { markerList, places } = this.props;
     const newCenterPosition = new window.naver.maps.LatLng(latitude, longitude);
 
     this.markCurrentLocation(this.props.currentLocation, map);
 
+    places.forEach(marker => {
+      const markerCoords = new window.naver.maps.LatLng(marker.y, marker.x);
+
+      new window.naver.maps.Marker({ 
+        position: markerCoords,
+        title: marker.name,
+        map,
+        icon: {
+          content: '<div class="wish-place-marker"></div>'
+        }
+      });
+    })
     markerList.forEach(
       marker => {
         const markerCoords = new window.naver.maps.LatLng(marker.y, marker.x);

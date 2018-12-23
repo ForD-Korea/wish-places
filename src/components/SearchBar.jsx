@@ -2,13 +2,16 @@ import React, { Component } from 'react';
 import { fetchPlaceInfo } from '../api';
 
 const SearchList = props => {
-  const { setMapCenter, searchPlaces, openPopup } = props;
+  const { setMapCenter, searchPlaces, openPopup, clearSearchBar } = props;
   const searchList = searchPlaces.map(
   (item, index) => (
     <li 
       key={`search-place-${index}`} 
       onMouseOver={() => setMapCenter({ latitude: item.y, longitude: item.x })}
-      onClick={() => openPopup(item)}>
+      onClick={() => {
+        clearSearchBar();
+        openPopup(item);
+      }}>
       <span className="name">{item.name}</span>
       <span className="address">{item.road_address}</span>
       <p></p>
@@ -36,11 +39,12 @@ class SearchBar extends Component {
     this.onChangeInput = this.onChangeInput.bind(this);
     this.onKeyDown = this.onKeyDown.bind(this);
     this.onSearchPlace = this.onSearchPlace.bind(this);
+    this.clearSearchBar = this.clearSearchBar.bind(this);
   }
 
   render() {
     const { searchPlaces } = this.state;
-    const maybeSearchList = !!searchPlaces.length ? <SearchList searchPlaces={searchPlaces} {...this.props}/> : null;
+    const maybeSearchList = !!searchPlaces.length ? <SearchList searchPlaces={searchPlaces} clearSearchBar={this.clearSearchBar} {...this.props}/> : null;
     const submitButtonText = this.state.isLoad ? '로딩중..' : '검색';
 
     return (
@@ -88,6 +92,13 @@ class SearchBar extends Component {
       });
 
       console.error(error);
+    });
+  }
+
+  clearSearchBar() {
+    this.setState({
+      searchPlaces: [],
+      inputText: ''
     });
   }
 }
