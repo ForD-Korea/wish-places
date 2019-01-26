@@ -30,7 +30,7 @@ class App extends Component {
     this.closePopup = this.closePopup.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     navigator.geolocation.getCurrentPosition((position) => {
       const { latitude, longitude } = position.coords;
 
@@ -86,15 +86,18 @@ class App extends Component {
   }
 
   closePopup(data) {
-    const { confirm } = data;
+    const { confirm, ...placeData } = data;
 
     this.setState({
-      isPopupOpen: false
+      isPopupOpen: false,
     });
 
     if (confirm) {
-      delete data.confirm;
-      this.addPlace(data);
+      this.addPlace(placeData);
+
+      this.setState({
+        markerList: [],
+      });
 
       return;
     }

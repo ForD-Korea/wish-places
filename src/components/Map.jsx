@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 
 class Map extends Component {
-  constructor(props) {
-    super(props);
-
-    this.mapElement = React.createRef();
-  }
+  mapElement = React.createRef();
+  mapMarkerList = [];
 
   componentDidMount() {
     const { latitude, longitude } = this.props.mapCenterCoords;
@@ -52,17 +49,21 @@ class Map extends Component {
         }
       });
     })
-    markerList.forEach(
-      marker => {
-        const markerCoords = new window.naver.maps.LatLng(marker.y, marker.x);
 
-        new window.naver.maps.Marker({ 
+    if (!markerList.length) {
+      this.mapMarkerList.forEach(marker => marker.setMap(null));
+    }
+
+    this.markerList = markerList.map(
+      (marker) => {
+        const markerCoords = new window.naver.maps.LatLng(marker.y, marker.x);
+     
+        return new window.naver.maps.Marker({ 
           position: markerCoords,
           title: marker.name,
           map
         });
-      }
-    );
+      });
 
     map.setCenter(newCenterPosition);
   }
