@@ -11,6 +11,8 @@ class Map extends Component {
       zoom: 11
     });
 
+    this.markCurrentLocation(this.props.currentLocation, map);
+
     this.map = map;
   }
 
@@ -50,11 +52,9 @@ class Map extends Component {
       });
     })
 
-    if (!markerList.length) {
-      this.mapMarkerList.forEach(marker => marker.setMap(null));
-    }
+    this.mapMarkerList.forEach(marker => marker.setMap(null));
 
-    this.markerList = markerList.map(
+    this.mapMarkerList = markerList.map(
       (marker) => {
         const markerCoords = new window.naver.maps.LatLng(marker.y, marker.x);
      
