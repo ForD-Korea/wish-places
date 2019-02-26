@@ -138,6 +138,10 @@ class App extends Component {
     });
   }
 
+  /*
+    팝업을 닫으면서 popup이 확인 버튼을 클릭했는지 아닌지를 판별하여, 팝업을 초기화 시키며 닫은 후
+    리스트에 추가하는 메서드입니다.
+  */
   closePopup(data) {
     const { confirm, ...placeData } = data;
 

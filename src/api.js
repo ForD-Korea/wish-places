@@ -3,6 +3,9 @@ import {
   SEARCH_SERVER // SEARC_SERVER는 검색을 위한 API 서버 URL이 담겨 있는 변수입니다.
 } from './config';
 
+/*
+  검색 할 단어와 현재위치를 받아 API를 호출합니다.
+*/
 export const fetchPlaceInfo = (keyword, coords) => {
   return axios.post(SEARCH_SERVER, {
     keyword,
